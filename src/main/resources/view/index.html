@@ -1,0 +1,285 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Strona z pytaniami i odpowiedziami</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f2f2f2;
+            margin: 0;
+            padding: 0;
+        }
+
+        header {
+            background-color: #333;
+            color: white;
+            padding: 20px;
+            text-align: center;
+        }
+
+        .container {
+            max-width: 800px;
+            margin: 20px auto;
+            padding: 20px;
+            background-color: #fff;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        }
+
+        h1, h2 {
+            color: #333;
+        }
+
+        button {
+            background-color: #007bff;
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            cursor: pointer;
+            margin-top: 10px;
+        }
+
+        button:hover {
+            background-color: #0056b3;
+        }
+
+        textarea {
+            width: 100%;
+            max-width: 100%;
+            height: 150px;
+            padding: 10px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            resize: vertical;
+            margin-bottom: 10px;
+        }
+
+        .topics {
+            display: flex;
+            flex-wrap: wrap;
+        }
+
+        .topic-label {
+            margin-right: 10px;
+        }
+
+        .hidden-answer {
+            display: none;
+            margin-top: 10px;
+            padding: 10px;
+            background-color: #f9f9f9;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+        }
+
+        #main {
+            background-color: #dddddd;
+            padding: 10px;
+            border-radius: 25px;
+        }
+    </style>
+</head>
+<body>
+<header>
+    <h1>Pytania i odpowiedzi</h1>
+</header>
+
+<div class="container">
+    <h2>Wiadomość tekstowa:</h2>
+    <div id="main">
+        <p id="message">Tutaj pojawi się wiadomość z serwera.</p>
+        <button onclick="zmienWiadomosc()">Zmień Wiadomość</button>
+
+        <!-- Checkboxy pod przyciskiem "Zmień Wiadomość" -->
+        <div class="selectedTopics" id="checkboxContainer">
+		</div>
+
+        <button id="showAnswerButton" onclick="pokazOdpowiedz()">Pokaż odpowiedź</button>
+        <div id="hiddenAnswer" class="hidden-answer">
+            <h2>Odpowiedź na pytanie:</h2>
+            <p id="answerText">Tutaj pojawi się odpowiedź na pytanie.</p>
+        </div>
+    </div>
+
+    <form id="myForm">
+        <h2>Dodaj nowe pytanie:</h2>
+        <textarea id="question" name="question" rows="4" maxlength="1000" required></textarea>
+        <h2>Dodaj odpowiedz:</h2>
+        <textarea id="answer" name="answer" rows="4" maxlength="1000" required></textarea>
+        
+		<div class="topics" id="topicsContainer">
+            <!-- Tematy będą wyświetlane tutaj -->
+        </div>
+		
+        <input type="text" id="newTopic" placeholder="Nowy temat">
+        <button type="button" id="addTopicButton">Dodaj Temat</button>
+        <button type="button" id="submitForm">Dodaj Pytanie</button>
+    </form>
+
+    <div id="response"></div>
+</div>
+
+
+
+
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<script>
+    let odpowiedzWidoczna = false;
+    let topics = [];
+
+    $(document).ready(function() {
+        // Pobierz dostępne tematy z serwera
+        pobierzTematy();
+
+        $("#submitForm").click(function() {
+            var formData = {
+                question: $("#question").val(),
+                answer: $("#answer").val(),
+                topics: []
+            };
+
+            $("input[name='topics']:checked").each(function() {
+                formData.topics.push($(this).val());
+            });
+
+            $.ajax({
+                type: "POST",
+                url: "http://127.0.0.1:8086/addQuestion",
+                data: JSON.stringify({
+                    question: formData.question,
+                    answer: formData.answer,
+                    topics: formData.topics
+                }),
+                contentType: "application/json",
+                success: function(response) {
+                    $("#response").html(response);
+                }
+            });
+        });
+
+        // Dodaj nowy temat po kliknięciu przycisku
+        $("#addTopicButton").click(function() {
+            const newTopic = $("#newTopic").val();
+            if (newTopic) {
+                $.ajax({
+                    type: "POST",
+                    url: "http://127.0.0.1:8086/addTopic",
+                    data: JSON.stringify(newTopic.replace(/"/g, '')),
+                    contentType: "application/json",
+                    success: function(response) {
+                        console.log(response);
+                        pobierzTematy(); // Zaktualizuj listę tematów po dodaniu nowego tematu
+                    }
+                });
+                $("#newTopic").val(""); // Wyczyść pole tekstowe po dodaniu tematu
+            }
+        });
+    });
+
+    async function pobierzTematy() {
+        try {
+            const response = await fetch('http://127.0.0.1:8086/allTopics');
+            if (!response.ok) {
+                throw new Error('Błąd pobierania tematów z serwera.');
+            }
+            const data = await response.json();
+            topics = data;
+            aktualizujTematy();
+        } catch (error) {
+            console.error(error);
+        }
+    }
+
+    function aktualizujTematy() {
+        const topicsContainer = document.getElementById("topicsContainer");
+        topicsContainer.innerHTML = ""; // Wyczyść aktualne tematy
+
+        topics.forEach(function(topic) {
+            const label = document.createElement("label");
+            label.className = "topic-label";
+            label.innerHTML = `<input type="checkbox" name="topics" value="${topic}"> ${topic}`;
+            topicsContainer.appendChild(label);
+        });
+
+        // Checkboxy pod przyciskiem "Zmień Wiadomość"
+        const checkboxContainer = document.getElementById("checkboxContainer");
+        checkboxContainer.innerHTML = ""; // Wyczyść aktualne checkboxy
+
+        topics.forEach(function(topic) {
+            const label = document.createElement("label");
+            label.className = "topic-label";
+            label.innerHTML = `<input type="checkbox" name="selectedTopics" checked value="${topic}"> ${topic}`;
+            checkboxContainer.appendChild(label);
+        });
+    }
+
+
+
+    async function pobierzWiadomosc() {
+	
+			var topicsSelected = []
+            
+			$("input[name='selectedTopics']:checked").each(function() {
+                topicsSelected.push($(this).val());
+				});
+			console.log(JSON.stringify({
+				topics: topicsSelected 
+			}));
+					
+			$.ajax({
+				type: "POST",
+				url: "http://127.0.0.1:8086/singleQuestion",
+				contentType: "application/json", // Ustawienie typu treści na application/json
+				data: JSON.stringify({ topics: topicsSelected }), // Przesłanie danych jako obiekt JSON
+				success: function(response) {
+					// Obsługa odpowiedzi z serwera
+					document.getElementById("message").innerText = response.question;
+					document.getElementById("answerText").innerText = response.answer;
+				}
+			});
+        /*try {
+            const response = await fetch('http://127.0.0.1:8086/singleQuestion');
+            if (!response.ok) {
+                throw new Error('Błąd pobierania danych z serwera.');
+            }
+            const data = await response.json();
+            document.getElementById("message").innerText = data.question;
+            document.getElementById("answerText").innerText = data.answer;
+
+            // Ukryj odpowiedź po zmianie wiadomości
+            if (odpowiedzWidoczna) {
+                pokazOdpowiedz();
+            }
+        } catch (error) {
+            console.error(error);
+        }*/
+    }
+
+    async function zmienWiadomosc() {
+        await pobierzWiadomosc();
+    }
+
+    function pokazOdpowiedz() {
+        const hiddenAnswer = document.getElementById("hiddenAnswer");
+        if (odpowiedzWidoczna) {
+            hiddenAnswer.style.display = "none";
+        } else {
+            hiddenAnswer.style.display = "block";
+        }
+        odpowiedzWidoczna = !odpowiedzWidoczna;
+    }
+
+    window.onload = pobierzWiadomosc;
+</script>
+
+
+
+
+
+
+
+</body>
+</html>
