@@ -38,14 +38,13 @@ public class MainController {
 
 
 
-    @RequestMapping(value = "/allQuestions", method = RequestMethod.GET)
+    @GetMapping(value = "/allQuestions")
     public List<Question> allQuestions(){
         return questionService.listQuestions();
     }
 
-
-    @RequestMapping(value = "/addQuestion", method = RequestMethod.POST)
-    public void addQestion(@RequestBody QuestionForm questionF){
+    @PostMapping(value = "/addQuestion")
+    public void addQuestion(@RequestBody QuestionForm questionF){
 
 
         Question question = new Question();
@@ -58,7 +57,7 @@ public class MainController {
                     topicFromDB -> topicFromDB.getTopicName().equals(topicName)
             );
 
-            if(check == false){
+            if(!check){
                 Topic topic = new Topic();
                 topic.setTopicName(topicName);
                 return topic;
@@ -80,7 +79,7 @@ public class MainController {
     }
 
     //optymalizacja
-    @RequestMapping(value = "/singleQuestion", method = RequestMethod.POST)
+    @PostMapping(value = "/singleQuestion")
     public QuestionDto singleQuestion(@RequestBody TopicDto topicDto) {
 
         List<String> tpcs = topicDto.getTopics();
@@ -118,7 +117,7 @@ public class MainController {
 
 
 
-    @RequestMapping(value = "/allTopics", method = RequestMethod.GET)
+    @GetMapping(value = "/allTopics")
     public List<String> allTopics(){
 
         List<Topic> topics = topicService.getAllTopics();
@@ -131,7 +130,7 @@ public class MainController {
     }
 
 
-    @RequestMapping(value = "/addTopic", method = RequestMethod.POST)
+    @PostMapping(value = "/addTopic")
     public void addTopics(@RequestBody String newTopic){
         topicService.createTopic(new Topic(newTopic.substring(1,newTopic.length()-1)));
     }
