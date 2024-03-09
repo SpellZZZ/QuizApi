@@ -2,6 +2,7 @@ package com.example.demo.service;
 
 
 import com.example.demo.dao.QuestionDao;
+import com.example.demo.dao.QuestionDaoImpl;
 import com.example.demo.dto.QuestionDto;
 import com.example.demo.model.Question;
 import jakarta.transaction.Transactional;

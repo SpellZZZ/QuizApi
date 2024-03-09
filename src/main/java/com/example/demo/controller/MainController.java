@@ -1,7 +1,7 @@
 package com.example.demo.controller;
 
 
-import com.example.demo.dao.TopicService;
+import com.example.demo.service.TopicService;
 import com.example.demo.dto.QuestionDto;
 import com.example.demo.dto.TopicDto;
 import com.example.demo.model.Question;
@@ -10,7 +10,6 @@ import com.example.demo.model.Topic;
 
 import com.example.demo.service.QuestionService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.ArrayList;
