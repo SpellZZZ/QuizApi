@@ -13,22 +13,16 @@ import java.util.List;
 public class TopicService {
 
     @Autowired
-    private SessionFactory sessionFactory;
+    private TopicService topicService;
 
     @Transactional
     public List<Topic> getAllTopics() {
-
-        Session session = sessionFactory.getCurrentSession();
-        return session.createQuery("from Topic", Topic.class).list();
-
+        return topicService.getAllTopics();
     }
 
     @Transactional
     public void createTopic(Topic topic) {
-
-        Session session = sessionFactory.getCurrentSession();
-        session.save(topic);
-
+        topicService.createTopic(topic);
     }
 
 
