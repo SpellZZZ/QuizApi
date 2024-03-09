@@ -52,21 +52,3 @@ public class QuestionService {
 
 }
 
-
-/*
-*
-* spring.datasource.url=jdbc:mysql://localhost:3306/quiz?autoReconnect=true&useSSL=false
-
-spring.datasource.username=root
-spring.datasource.password=
-
-server.port=8086
-
-spring.jpa.hibernate.ddl-auto=update
-spring.jpa.show-sql=true
-spring.jpa.properties.hibernate.format_sql=true
-
-spring.datasource.driver-class-name=com.mysql.cj.jdbc.Driver
-
-spring.autoconfigure.exclude=org.springframework.boot.autoconfigure.security.servlet.SecurityAutoConfiguration
-* */

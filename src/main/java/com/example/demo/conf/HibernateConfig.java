@@ -48,13 +48,3 @@ public class HibernateConfig {
 }
 
 
-
-
-
-
-/*pgadmin4 5432
-spring.datasource.url=jdbc:postgresql://localhost:5432/quiz
-spring.datasource.username=postgres
-spring.datasource.password=admin
-*/
-
