@@ -23,21 +23,19 @@ public class MainController {
 
     Random rn = new Random();
 
+    final private QuestionService questionService;
+    final private TopicService topicService;
 
-
-    QuestionService questionService;
-    @Autowired(required=true)
-    @Qualifier(value="questionService")
-    public void setPersonService(QuestionService ps){
-        this.questionService = ps;
+    @Autowired
+    MainController(QuestionService questionService,
+                   TopicService topicService
+    ){
+        this.questionService = questionService;
+        this.topicService = topicService;
     }
 
-    TopicService topicService;
-    @Autowired(required=true)
-    @Qualifier(value="topicService")
-    public void setTopicService(TopicService ts){
-        this.topicService = ts;
-    }
+
+
 
 
     @RequestMapping(value = "/allQuestions", method = RequestMethod.GET)
