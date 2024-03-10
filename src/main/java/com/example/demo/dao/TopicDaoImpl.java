@@ -4,6 +4,7 @@ package com.example.demo.dao;
 import com.example.demo.model.Topic;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
+import org.hibernate.query.Query;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -29,4 +30,18 @@ public class TopicDaoImpl implements TopicDao{
         Session session = sessionFactory.getCurrentSession();
         session.persist(topic);
     }
+    @Override
+    public Topic findByTopicName(String topicName) {
+        Session session = sessionFactory.openSession();
+            String hql = "FROM Topic t WHERE t.topicName = :topicName";
+            Query<Topic> query = session.createQuery(hql, Topic.class);
+            query.setParameter("topicName", topicName);
+            List<Topic> topic = query.getResultList();
+            return topic.isEmpty() ? null : topic.get(0);
+
+    }
+
+
+
+
 }

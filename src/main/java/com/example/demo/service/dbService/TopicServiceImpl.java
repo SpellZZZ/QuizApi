@@ -19,14 +19,22 @@ public class TopicServiceImpl implements TopicService {
     }
 
 
+    @Override
     @Transactional
     public List<Topic> getAllTopics() {
         return topicDao.getAllTopics();
     }
 
+    @Override
     @Transactional
     public void createTopic(Topic topic) {
         topicDao.createTopic(topic);
+    }
+
+    @Override
+    @Transactional
+    public Topic findByTopicName(String topicName) {
+        return topicDao.findByTopicName(topicName);
     }
 
 

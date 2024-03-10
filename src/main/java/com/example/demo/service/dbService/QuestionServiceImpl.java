@@ -20,31 +20,33 @@ public class QuestionServiceImpl implements QuestionService {
     QuestionServiceImpl(QuestionDao questionDAO) {
         this.questionDao = questionDAO;
     }
-
+    @Override
     @Transactional
     public void addQuestion(Question p) {
         this.questionDao.addQuestion(p);
     }
-
+    @Override
     @Transactional
     public void updateQuestion(Question p) {
         this.questionDao.updateQuestion(p);
     }
-
+    @Override
     @Transactional
     public List<Question> listQuestions() {
         return this.questionDao.listQuestions();
     }
+    @Override
     @Transactional
     public List<QuestionDto> listQuestionsQA() {
         return this.questionDao.listQuestionsQA();
     }
-
+    @Override
     @Transactional
     public Question getQuestionById(int id) {
         return this.questionDao.getQuestionById(id);
     }
 
+    @Override
     @Transactional
     public void removeQuestion(int id) {
         this.questionDao.removeQuestion(id);

@@ -43,13 +43,29 @@ public class QuestionManagementServiceImpl implements QuestionManagementService 
     public void addQuestion(QuestionForm questionF) {
         Question question = new Question();
 
+        List<String> topicStringList = questionF.getTopics();
+        List<Topic> topicList = new ArrayList<>();
 
-        question.setTopics(questionF.getTopics().stream().map(topicName -> {
+        for(String t : topicStringList){
+            topicList.add(
+                    topicService.findByTopicName(t)
+            );
+        }
+
+        //question.setTopics(topicList);
+
+        question.setQuestion(questionF.getQuestion());
+        question.setAnswer(questionF.getAnswer());
+        questionService.addQuestion(question);
+
+        /*question.setTopics(questionF.getTopics().stream().map(topicName -> {
 
 
             boolean check = topicService.getAllTopics().stream().anyMatch(
                     topicFromDB -> topicFromDB.getTopicName().equals(topicName)
             );
+            System.out.println(topicName);
+            System.out.println(check);
 
             if(!check){
                 Topic topic = new Topic();
@@ -63,13 +79,14 @@ public class QuestionManagementServiceImpl implements QuestionManagementService 
                         .orElse(null);
             }
 
-        }).collect(Collectors.toList()));
+        }).collect(Collectors.toList()));*/
 
 
-        question.setQuestion(questionF.getQuestion());
-        question.setAnswer(questionF.getAnswer());
 
-        questionService.addQuestion(question);
+
+
+
+
     }
 
     //optymalizacja
