@@ -9,7 +9,9 @@ import com.example.demo.model.QuestionForm;
 import com.example.demo.model.Topic;
 
 import com.example.demo.service.QuestionService;
+import com.example.demo.service.QuestionServiceImpl;
 import com.example.demo.service.TopicService;
+import com.example.demo.service.TopicServiceImpl;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
@@ -27,8 +29,8 @@ public class MainController {
     final private TopicService topicService;
 
     @Autowired
-    MainController(QuestionService questionService,
-                   TopicService topicService
+    MainController(QuestionServiceImpl questionService,
+                   TopicServiceImpl topicService
     ){
         this.questionService = questionService;
         this.topicService = topicService;
