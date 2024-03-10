@@ -33,8 +33,8 @@ public class TopicServiceImpl implements TopicService {
 
     @Override
     @Transactional
-    public Topic findByTopicName(String topicName) {
-        return topicDao.findByTopicName(topicName);
+    public List<Topic> findTopicsByNames(List<String> topicNames) {
+        return topicDao.findTopicsByNames(topicNames);
     }
 
 

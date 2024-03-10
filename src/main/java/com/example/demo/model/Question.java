@@ -15,7 +15,7 @@ public class Question {
     private String question;
     private String answer;
 
-    @ManyToMany(cascade = CascadeType.ALL)
+    @ManyToMany(cascade = CascadeType.MERGE)
     @JoinTable(
             name = "topic_question",
             joinColumns = @JoinColumn(name = "question_id"),

@@ -14,6 +14,6 @@ import java.util.List;
 public interface TopicDao {
     public List<Topic> getAllTopics();
     public void createTopic(Topic topic);
-    public Topic findByTopicName(String topicName);
+    public List<Topic> findTopicsByNames(List<String> topicNames);
 
 }

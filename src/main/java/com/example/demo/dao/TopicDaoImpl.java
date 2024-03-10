@@ -30,7 +30,7 @@ public class TopicDaoImpl implements TopicDao{
         Session session = sessionFactory.getCurrentSession();
         session.persist(topic);
     }
-    @Override
+   /* @Override
     public Topic findByTopicName(String topicName) {
         Session session = sessionFactory.openSession();
             String hql = "FROM Topic t WHERE t.topicName = :topicName";
@@ -39,9 +39,16 @@ public class TopicDaoImpl implements TopicDao{
             List<Topic> topic = query.getResultList();
             return topic.isEmpty() ? null : topic.get(0);
 
-    }
+    }*/
 
-
+    @Override
+   public List<Topic> findTopicsByNames(List<String> topicNames) {
+       try (Session session = sessionFactory.openSession()) {
+           Query<Topic> query = session.createQuery("SELECT t FROM Topic t WHERE t.topicName IN :topicNames", Topic.class);
+           query.setParameterList("topicNames", topicNames);
+           return query.getResultList();
+       }
+   }
 
 
 }

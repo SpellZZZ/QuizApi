@@ -44,19 +44,16 @@ public class QuestionManagementServiceImpl implements QuestionManagementService 
         Question question = new Question();
 
         List<String> topicStringList = questionF.getTopics();
-        List<Topic> topicList = new ArrayList<>();
 
-        for(String t : topicStringList){
-            topicList.add(
-                    topicService.findByTopicName(t)
-            );
-        }
-
-        //question.setTopics(topicList);
-
+        question.setTopics(
+                topicService.findTopicsByNames(topicStringList)
+        );
         question.setQuestion(questionF.getQuestion());
         question.setAnswer(questionF.getAnswer());
         questionService.addQuestion(question);
+
+
+
 
         /*question.setTopics(questionF.getTopics().stream().map(topicName -> {
 
@@ -80,12 +77,6 @@ public class QuestionManagementServiceImpl implements QuestionManagementService 
             }
 
         }).collect(Collectors.toList()));*/
-
-
-
-
-
-
 
     }
 

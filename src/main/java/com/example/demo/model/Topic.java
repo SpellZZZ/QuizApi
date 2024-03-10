@@ -19,19 +19,18 @@ public class Topic {
 
 
 
-    @ManyToMany(mappedBy = "topics")
+    /*@ManyToMany(mappedBy = "topics")
     private List<Question> question = new ArrayList<>();
+*/
 
-
-    public Topic(int topic_id, String topicName, List<Question> question) {
+    public Topic(int topic_id, String topicName/*, List<Question> question*/) {
         this.topic_id = topic_id;
         this.topicName = topicName;
-        this.question = question;
+       // this.question = question;
     }
     public Topic(String topicName) {
-        this.topic_id = topic_id;
         this.topicName = topicName;
-        this.question = question;
+        //this.question = question;
     }
     public Topic() {
     }
@@ -53,11 +52,11 @@ public class Topic {
         this.topicName = topicName;
     }
 
-    public List<Question> getQuestion() {
+    /*public List<Question> getQuestion() {
         return question;
     }
 
     public void setQuestion(List<Question> question) {
         this.question = question;
-    }
+    }*/
 }
