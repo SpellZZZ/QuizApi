@@ -53,37 +53,7 @@ public class MainController {
     //refactor
     @PostMapping(value = "/addQuestion")
     public void addQuestion(@RequestBody QuestionForm questionF){
-
-
-        Question question = new Question();
-
-
-        question.setTopics(questionF.getTopics().stream().map(topicName -> {
-
-
-            boolean check = topicService.getAllTopics().stream().anyMatch(
-                    topicFromDB -> topicFromDB.getTopicName().equals(topicName)
-            );
-
-            if(!check){
-                Topic topic = new Topic();
-                topic.setTopicName(topicName);
-                return topic;
-            } else {
-                return topicService.getAllTopics()
-                        .stream()
-                        .filter(topicFromDB -> topicFromDB.getTopicName().equals(topicName))
-                        .findFirst()
-                        .orElse(null);
-            }
-
-        }).collect(Collectors.toList()));
-
-
-        question.setQuestion(questionF.getQuestion());
-        question.setAnswer(questionF.getAnswer());
-
-        questionService.addQuestion(question);
+        questionManagementService.addQuestion(questionF);
     }
 
     @PostMapping(value = "/singleQuestion")

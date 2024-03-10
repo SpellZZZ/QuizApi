@@ -4,6 +4,7 @@ package com.example.demo.service.managementService;
 import com.example.demo.dto.QuestionDto;
 import com.example.demo.dto.TopicDto;
 import com.example.demo.model.Question;
+import com.example.demo.model.QuestionForm;
 import com.example.demo.model.Topic;
 import com.example.demo.service.dbService.QuestionService;
 import com.example.demo.service.dbService.QuestionServiceImpl;
@@ -15,6 +16,7 @@ import org.springframework.stereotype.Service;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
+import java.util.stream.Collectors;
 
 @Service
 public class QuestionManagementServiceImpl implements QuestionManagementService {
@@ -22,16 +24,52 @@ public class QuestionManagementServiceImpl implements QuestionManagementService 
 
     Random rn = new Random();
     final private QuestionService questionService;
+    final private TopicService topicService;
 
     @Autowired
-    QuestionManagementServiceImpl(QuestionServiceImpl questionService
+    QuestionManagementServiceImpl(QuestionServiceImpl questionService,
+                                  TopicService topicService
     ){
         this.questionService = questionService;
+        this.topicService = topicService;
     }
 
     @Override
     public List<Question> getQuestionsList() {
         return questionService.listQuestions();
+    }
+
+    @Override
+    public void addQuestion(QuestionForm questionF) {
+        Question question = new Question();
+
+
+        question.setTopics(questionF.getTopics().stream().map(topicName -> {
+
+
+            boolean check = topicService.getAllTopics().stream().anyMatch(
+                    topicFromDB -> topicFromDB.getTopicName().equals(topicName)
+            );
+
+            if(!check){
+                Topic topic = new Topic();
+                topic.setTopicName(topicName);
+                return topic;
+            } else {
+                return topicService.getAllTopics()
+                        .stream()
+                        .filter(topicFromDB -> topicFromDB.getTopicName().equals(topicName))
+                        .findFirst()
+                        .orElse(null);
+            }
+
+        }).collect(Collectors.toList()));
+
+
+        question.setQuestion(questionF.getQuestion());
+        question.setAnswer(questionF.getAnswer());
+
+        questionService.addQuestion(question);
     }
 
     //optymalizacja
