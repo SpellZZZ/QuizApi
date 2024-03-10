@@ -8,10 +8,10 @@ import com.example.demo.model.Question;
 import com.example.demo.model.QuestionForm;
 import com.example.demo.model.Topic;
 
-import com.example.demo.service.QuestionService;
-import com.example.demo.service.QuestionServiceImpl;
-import com.example.demo.service.TopicService;
-import com.example.demo.service.TopicServiceImpl;
+import com.example.demo.service.dbService.QuestionService;
+import com.example.demo.service.dbService.QuestionServiceImpl;
+import com.example.demo.service.dbService.TopicService;
+import com.example.demo.service.dbService.TopicServiceImpl;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 

@@ -1,7 +1,6 @@
-package com.example.demo.service;
+package com.example.demo.service.dbService;
 
 import com.example.demo.dao.TopicDao;
-import com.example.demo.dao.TopicDaoImpl;
 import com.example.demo.model.Topic;
 import jakarta.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
