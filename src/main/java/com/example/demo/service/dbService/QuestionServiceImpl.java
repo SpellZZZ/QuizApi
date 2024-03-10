@@ -52,5 +52,11 @@ public class QuestionServiceImpl implements QuestionService {
         this.questionDao.removeQuestion(id);
     }
 
+    @Override
+    @Transactional
+    public List<Question> findQuestionsByTopicNames(List<String> topicNames) {
+        return this.questionDao.findQuestionsByTopicNames(topicNames);
+    }
+
 }
 

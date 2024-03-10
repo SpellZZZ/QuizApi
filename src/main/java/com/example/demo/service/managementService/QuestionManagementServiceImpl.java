@@ -54,32 +54,18 @@ public class QuestionManagementServiceImpl implements QuestionManagementService 
         questionService.addQuestion(question);
     }
 
-
-    //optymalizacja
     @Override
     public QuestionDto singleQuestion(TopicDto topicDto) {
-        List<String> tpcs = topicDto.getTopics();
-        List<Question> qst = questionService.listQuestions();
-        List<Question> res = new ArrayList<>() ;
 
-        System.out.println("Liczba pytan: "+ qst.size());
-        System.out.println("Liczba tematow: " + tpcs.size());
+        List<Question> questionList = questionService.findQuestionsByTopicNames(topicDto.getTopics());
 
-        for(Question q : qst) {
-            for (String s : tpcs) {
-                for(Topic t : q.getTopics()){
-                    if(t.getTopicName().equals(s)){
-                        res.add(q);
-                    }
-                }
-            }
-        }
+        if(questionList.isEmpty()) return new QuestionDto("Brak pytan", "Brak odpowiedzi");
 
-        if( res.size() == 0) return new QuestionDto("Brak pytan", "Brak odpowiedzi");
+        int i = rn.nextInt((int) questionList.size());
 
-        int i = rn.nextInt((int) res.size());
+        return new QuestionDto(questionList.get( i ).getQuestion(), questionList.get( i ).getAnswer());
 
-        return new QuestionDto(res.get( i ).getQuestion(), res.get( i ).getAnswer());
+
     }
 
 }
@@ -110,3 +96,29 @@ public class QuestionManagementServiceImpl implements QuestionManagementService 
             }
 
         }).collect(Collectors.toList()));*/
+
+
+//old random question
+        /*List<String> tpcs = topicDto.getTopics();
+        List<Question> qst = questionService.listQuestions();
+        List<Question> res = new ArrayList<>() ;
+
+        System.out.println("Liczba pytan: "+ qst.size());
+        System.out.println("Liczba tematow: " + tpcs.size());
+
+        for(Question q : qst) {
+
+            for (String s : tpcs) {
+                for(Topic t : q.getTopics()){
+                    if(t.getTopicName().equals(s)){
+                        res.add(q);
+                    }
+                }
+            }
+        }
+
+        if( res.size() == 0) return new QuestionDto("Brak pytan", "Brak odpowiedzi");
+
+        int i = rn.nextInt((int) res.size());
+
+        return new QuestionDto(res.get( i ).getQuestion(), res.get( i ).getAnswer());*/

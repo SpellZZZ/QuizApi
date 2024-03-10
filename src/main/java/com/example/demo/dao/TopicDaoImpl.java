@@ -42,13 +42,15 @@ public class TopicDaoImpl implements TopicDao{
     }*/
 
     @Override
-   public List<Topic> findTopicsByNames(List<String> topicNames) {
-       try (Session session = sessionFactory.openSession()) {
-           Query<Topic> query = session.createQuery("SELECT t FROM Topic t WHERE t.topicName IN :topicNames", Topic.class);
-           query.setParameterList("topicNames", topicNames);
-           return query.getResultList();
-       }
-   }
+    public List<Topic> findTopicsByNames(List<String> topicNames) {
+        try (Session session = sessionFactory.openSession()) {
+            Query<Topic> query = session.createQuery("SELECT t FROM Topic t WHERE t.topicName IN :topicNames", Topic.class);
+            query.setParameterList("topicNames", topicNames);
+            return query.getResultList();
+        }
+    }
+
+
 
 
 }

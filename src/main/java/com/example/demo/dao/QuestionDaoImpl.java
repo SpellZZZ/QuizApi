@@ -5,6 +5,7 @@ import com.example.demo.dto.QuestionDto;
 import com.example.demo.model.Question;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
+import org.hibernate.query.Query;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -83,4 +84,13 @@ public class QuestionDaoImpl implements QuestionDao {
     }
 
 
+
+    public List<Question> findQuestionsByTopicNames(List<String> topicNames) {
+        try (Session session = sessionFactory.openSession()) {
+            String hql = "SELECT DISTINCT q FROM Question q JOIN q.topics t WHERE t.topicName IN :topicNames";
+            Query<Question> query = session.createQuery(hql, Question.class);
+            query.setParameterList("topicNames", topicNames);
+            return query.getResultList();
+        }
+    }
 }

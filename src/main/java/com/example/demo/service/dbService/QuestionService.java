@@ -13,6 +13,7 @@ public interface QuestionService {
     public List<QuestionDto> listQuestionsQA();
     public Question getQuestionById(int id);
     public void removeQuestion(int id);
+    public List<Question> findQuestionsByTopicNames(List<String> topicNames);
 
 
 
