@@ -32,9 +32,6 @@ public class MainController {
     }
 
 
-
-
-
     @GetMapping(value = "/allQuestions")
     public List<Question> allQuestions(){
         return questionManagementService.getQuestionsList();
