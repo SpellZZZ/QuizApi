@@ -12,6 +12,8 @@ import com.example.demo.service.dbService.QuestionService;
 import com.example.demo.service.dbService.QuestionServiceImpl;
 import com.example.demo.service.dbService.TopicService;
 import com.example.demo.service.dbService.TopicServiceImpl;
+import com.example.demo.service.managementService.QuestionManagementService;
+import com.example.demo.service.managementService.TopicManagementService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
@@ -25,15 +27,15 @@ public class MainController {
 
     Random rn = new Random();
 
-    final private QuestionService questionService;
-    final private TopicService topicService;
+    final private QuestionManagementService questionManagementService;
+    final private TopicManagementService topicManagementService;
 
     @Autowired
-    MainController(QuestionServiceImpl questionService,
-                   TopicServiceImpl topicService
+    MainController(QuestionManagementService questionManagementService,
+                   TopicManagementService topicManagementService
     ){
-        this.questionService = questionService;
-        this.topicService = topicService;
+        this.questionManagementService = questionManagementService;
+        this.topicManagementService = topicManagementService;
     }
 
 
@@ -42,8 +44,17 @@ public class MainController {
 
     @GetMapping(value = "/allQuestions")
     public List<Question> allQuestions(){
-        return questionService.listQuestions();
+        return questionManagementService.getQuestionsList();
     }
+
+    @PostMapping(value = "/addTopic")
+    public void addTopics(@RequestBody String newTopic){
+        topicManagementService.createTopic(newTopic);
+    }
+
+
+
+
 
     //refactor
     @PostMapping(value = "/addQuestion")
@@ -134,10 +145,6 @@ public class MainController {
     }
 
 
-    @PostMapping(value = "/addTopic")
-    public void addTopics(@RequestBody String newTopic){
-        topicService.createTopic(new Topic(newTopic.substring(1,newTopic.length()-1)));
-    }
 
 
 

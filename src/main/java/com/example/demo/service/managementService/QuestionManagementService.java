@@ -1,7 +1,9 @@
 package com.example.demo.service.managementService;
 
-public class QuestionManagementService {
+import com.example.demo.model.Question;
 
+import java.util.List;
 
-    //init
+public interface QuestionManagementService {
+    List<Question> getQuestionsList();
 }

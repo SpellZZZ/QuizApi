@@ -1,4 +1,5 @@
 package com.example.demo.service.managementService;
 
-public class TopicManagementService {
+public interface TopicManagementService {
+    void createTopic(String newTopic);
 }
