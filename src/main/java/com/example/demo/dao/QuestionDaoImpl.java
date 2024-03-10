@@ -19,25 +19,27 @@ public class QuestionDaoImpl implements QuestionDao {
 
 
     private static final Logger logger = LoggerFactory.getLogger(QuestionDaoImpl.class);
-    @Autowired
-    private SessionFactory sessionFactory;
 
-    public void setSessionFactory(SessionFactory sf){
-        this.sessionFactory = sf;
+    final private SessionFactory sessionFactory;
+
+    @Autowired
+    QuestionDaoImpl(SessionFactory sessionFactory){
+        this.sessionFactory = sessionFactory;
     }
 
+    @Override
     public void addQuestion(Question q) {
         Session session = this.sessionFactory.getCurrentSession();
         session.persist(q);
         logger.info("Question saved successfully");
     }
-
+    @Override
     public void updateQuestion(Question q) {
         Session session = this.sessionFactory.getCurrentSession();
         session.update(q);
         logger.info("Question updated successfully");
     }
-
+    @Override
     @SuppressWarnings("unchecked")
     public List<Question> listQuestions() {
         Session session = this.sessionFactory.getCurrentSession();
@@ -47,7 +49,7 @@ public class QuestionDaoImpl implements QuestionDao {
         }
         return personsList;
     }
-
+    @Override
     @SuppressWarnings("unchecked")
     public List<QuestionDto> listQuestionsQA() {
         Session session = this.sessionFactory.getCurrentSession();
@@ -66,14 +68,14 @@ public class QuestionDaoImpl implements QuestionDao {
 
         return questionDtoList;
     }
-
+    @Override
     public Question getQuestionById(int id) {
         Session session = this.sessionFactory.getCurrentSession();
         Question p = (Question) session.load(Question.class, id);
         logger.info("Question loaded successfully");
         return p;
     }
-
+    @Override
     public void removeQuestion(int id) {
         Session session = this.sessionFactory.getCurrentSession();
         Question p = (Question) session.load(Question.class, id);
@@ -85,6 +87,7 @@ public class QuestionDaoImpl implements QuestionDao {
 
 
 
+    @Override
     public List<Question> findQuestionsByTopicNames(List<String> topicNames) {
         try (Session session = sessionFactory.openSession()) {
             String hql = "SELECT DISTINCT q FROM Question q JOIN q.topics t WHERE t.topicName IN :topicNames";

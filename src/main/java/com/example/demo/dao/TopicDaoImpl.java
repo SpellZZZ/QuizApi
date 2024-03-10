@@ -16,8 +16,12 @@ import java.util.List;
 public class TopicDaoImpl implements TopicDao{
 
     private static final Logger logger = LoggerFactory.getLogger(TopicDaoImpl.class);
+    final private SessionFactory sessionFactory;
+
     @Autowired
-    private SessionFactory sessionFactory;
+    TopicDaoImpl(SessionFactory sessionFactory){
+        this.sessionFactory = sessionFactory;
+    }
 
     @Override
     public List<Topic> getAllTopics() {
@@ -30,16 +34,7 @@ public class TopicDaoImpl implements TopicDao{
         Session session = sessionFactory.getCurrentSession();
         session.persist(topic);
     }
-   /* @Override
-    public Topic findByTopicName(String topicName) {
-        Session session = sessionFactory.openSession();
-            String hql = "FROM Topic t WHERE t.topicName = :topicName";
-            Query<Topic> query = session.createQuery(hql, Topic.class);
-            query.setParameter("topicName", topicName);
-            List<Topic> topic = query.getResultList();
-            return topic.isEmpty() ? null : topic.get(0);
 
-    }*/
 
     @Override
     public List<Topic> findTopicsByNames(List<String> topicNames) {
