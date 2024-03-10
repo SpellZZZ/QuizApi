@@ -40,13 +40,7 @@ public class MainController {
 
     @PostMapping(value = "/addQuestion")
     public void addQuestion(@RequestBody QuestionFormDto questionF){
-        Question question = new Question();
-        List<String> topicStringList = questionF.getTopics();
-        question.setTopics(questionManagementService.getTopicsFromList(topicStringList));
-        question.setQuestion(questionF.getQuestion());
-        question.setAnswer(questionF.getAnswer());
-
-        questionManagementService.addQuestion(question);
+        questionManagementService.addQuestion(questionF);
     }
 
     @PostMapping(value = "/singleQuestion")

@@ -11,7 +11,7 @@ import java.util.List;
 public interface QuestionManagementService {
     public QuestionDto singleQuestion(TopicDto topicDto);
     List<Question> getQuestionsList();
-    void addQuestion(Question question);
+    void addQuestion(QuestionFormDto questionF);
     List<Topic> getTopicsFromList(List<String> topicStringList);
 
 }

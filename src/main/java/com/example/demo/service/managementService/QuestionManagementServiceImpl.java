@@ -44,7 +44,13 @@ public class QuestionManagementServiceImpl implements QuestionManagementService 
     }
 
     @Override
-    public void addQuestion(Question question) {
+    public void addQuestion(QuestionFormDto questionF) {
+        Question question = new Question();
+        List<String> topicStringList = questionF.getTopics();
+        question.setTopics(getTopicsFromList(topicStringList));
+        question.setQuestion(questionF.getQuestion());
+        question.setAnswer(questionF.getAnswer());
+
         questionService.addQuestion(question);
     }
 
