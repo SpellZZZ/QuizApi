@@ -41,16 +41,7 @@ public class MainController {
         return questionManagementService.getQuestionsList();
     }
 
-    @PostMapping(value = "/addTopic")
-    public void addTopics(@RequestBody String newTopic){
-        topicManagementService.createTopic(newTopic);
-    }
 
-
-
-
-
-    //refactor
     @PostMapping(value = "/addQuestion")
     public void addQuestion(@RequestBody QuestionForm questionF){
         questionManagementService.addQuestion(questionF);
@@ -71,9 +62,10 @@ public class MainController {
         return topicNames;
     }
 
-
-
-
+    @PostMapping(value = "/addTopic")
+    public void addTopics(@RequestBody String newTopic){
+        topicManagementService.createTopic(newTopic);
+    }
 
 
 }
