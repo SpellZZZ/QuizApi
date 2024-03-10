@@ -7,6 +7,9 @@ import com.example.demo.service.dbService.TopicServiceImpl;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
+import java.util.stream.Collectors;
+
 @Service
 public class TopicManagementServiceImpl implements TopicManagementService {
 
@@ -23,5 +26,17 @@ public class TopicManagementServiceImpl implements TopicManagementService {
         String topicName = newTopic.substring(1,newTopic.length()-1);
         Topic topic = new Topic(topicName);
         topicService.createTopic(topic);
+    }
+
+    @Override
+    public List<Topic> getAllTopics() {
+        return topicService.getAllTopics();
+    }
+
+    @Override
+    public List<String> getOnlyTopicsNames(List<Topic> topics) {
+        return topics.stream()
+                    .map(Topic::getTopicName)
+                    .collect(Collectors.toList());
     }
 }
