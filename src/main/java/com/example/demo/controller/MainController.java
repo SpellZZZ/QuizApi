@@ -45,6 +45,7 @@ public class MainController {
         return questionService.listQuestions();
     }
 
+    //refactor
     @PostMapping(value = "/addQuestion")
     public void addQuestion(@RequestBody QuestionForm questionF){
 
@@ -80,6 +81,7 @@ public class MainController {
         questionService.addQuestion(question);
     }
 
+    //refactor
     //optymalizacja
     @PostMapping(value = "/singleQuestion")
     public QuestionDto singleQuestion(@RequestBody TopicDto topicDto) {
@@ -118,7 +120,7 @@ public class MainController {
     }
 
 
-
+    //refactor
     @GetMapping(value = "/allTopics")
     public List<String> allTopics(){
 
