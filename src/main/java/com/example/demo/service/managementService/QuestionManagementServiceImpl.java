@@ -4,19 +4,17 @@ package com.example.demo.service.managementService;
 import com.example.demo.dto.QuestionDto;
 import com.example.demo.dto.TopicDto;
 import com.example.demo.model.Question;
-import com.example.demo.model.QuestionForm;
+import com.example.demo.dto.QuestionFormDto;
 import com.example.demo.model.Topic;
 import com.example.demo.service.dbService.QuestionService;
 import com.example.demo.service.dbService.QuestionServiceImpl;
 import com.example.demo.service.dbService.TopicService;
-import com.example.demo.service.dbService.TopicServiceImpl;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
-import java.util.stream.Collectors;
 
 @Service
 public class QuestionManagementServiceImpl implements QuestionManagementService {
@@ -39,46 +37,17 @@ public class QuestionManagementServiceImpl implements QuestionManagementService 
         return questionService.listQuestions();
     }
 
+
     @Override
-    public void addQuestion(QuestionForm questionF) {
-        Question question = new Question();
-
-        List<String> topicStringList = questionF.getTopics();
-
-        question.setTopics(
-                topicService.findTopicsByNames(topicStringList)
-        );
-        question.setQuestion(questionF.getQuestion());
-        question.setAnswer(questionF.getAnswer());
-        questionService.addQuestion(question);
-
-
-
-
-        /*question.setTopics(questionF.getTopics().stream().map(topicName -> {
-
-
-            boolean check = topicService.getAllTopics().stream().anyMatch(
-                    topicFromDB -> topicFromDB.getTopicName().equals(topicName)
-            );
-            System.out.println(topicName);
-            System.out.println(check);
-
-            if(!check){
-                Topic topic = new Topic();
-                topic.setTopicName(topicName);
-                return topic;
-            } else {
-                return topicService.getAllTopics()
-                        .stream()
-                        .filter(topicFromDB -> topicFromDB.getTopicName().equals(topicName))
-                        .findFirst()
-                        .orElse(null);
-            }
-
-        }).collect(Collectors.toList()));*/
-
+    public List<Topic> getTopicsFromList(List<String> topicStringList) {
+        return topicService.findTopicsByNames(topicStringList);
     }
+
+    @Override
+    public void addQuestion(Question question) {
+        questionService.addQuestion(question);
+    }
+
 
     //optymalizacja
     @Override
@@ -108,3 +77,30 @@ public class QuestionManagementServiceImpl implements QuestionManagementService 
     }
 
 }
+
+
+
+
+// old bind topics and question
+        /*question.setTopics(questionF.getTopics().stream().map(topicName -> {
+
+
+            boolean check = topicService.getAllTopics().stream().anyMatch(
+                    topicFromDB -> topicFromDB.getTopicName().equals(topicName)
+            );
+            System.out.println(topicName);
+            System.out.println(check);
+
+            if(!check){
+                Topic topic = new Topic();
+                topic.setTopicName(topicName);
+                return topic;
+            } else {
+                return topicService.getAllTopics()
+                        .stream()
+                        .filter(topicFromDB -> topicFromDB.getTopicName().equals(topicName))
+                        .findFirst()
+                        .orElse(null);
+            }
+
+        }).collect(Collectors.toList()));*/

@@ -1,27 +1,25 @@
-package com.example.demo.model;
-
-import jakarta.persistence.*;
+package com.example.demo.dto;
 
 import java.util.ArrayList;
 import java.util.List;
 
-public class QuestionForm {
+public class QuestionFormDto {
 
     private String question;
     private String answer;
     private List<String> topics = new ArrayList<>();
 
 
-    public QuestionForm() {
+    public QuestionFormDto() {
     }
 
-    public QuestionForm(String question, String answer, List<String> topics) {
+    public QuestionFormDto(String question, String answer, List<String> topics) {
         this.question = question;
         this.answer = answer;
         this.topics = topics;
     }
 
-    public QuestionForm(String question, String answer) {
+    public QuestionFormDto(String question, String answer) {
         this.question = question;
         this.answer = answer;
     }

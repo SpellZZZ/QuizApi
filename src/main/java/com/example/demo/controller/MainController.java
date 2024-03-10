@@ -5,7 +5,7 @@ package com.example.demo.controller;
 import com.example.demo.dto.QuestionDto;
 import com.example.demo.dto.TopicDto;
 import com.example.demo.model.Question;
-import com.example.demo.model.QuestionForm;
+import com.example.demo.dto.QuestionFormDto;
 import com.example.demo.model.Topic;
 
 import com.example.demo.service.managementService.QuestionManagementService;
@@ -14,7 +14,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
-import java.util.stream.Collectors;
 
 @RestController
 public class MainController {
@@ -43,8 +42,14 @@ public class MainController {
 
 
     @PostMapping(value = "/addQuestion")
-    public void addQuestion(@RequestBody QuestionForm questionF){
-        questionManagementService.addQuestion(questionF);
+    public void addQuestion(@RequestBody QuestionFormDto questionF){
+        Question question = new Question();
+        List<String> topicStringList = questionF.getTopics();
+        question.setTopics(questionManagementService.getTopicsFromList(topicStringList));
+        question.setQuestion(questionF.getQuestion());
+        question.setAnswer(questionF.getAnswer());
+
+        questionManagementService.addQuestion(question);
     }
 
     @PostMapping(value = "/singleQuestion")
