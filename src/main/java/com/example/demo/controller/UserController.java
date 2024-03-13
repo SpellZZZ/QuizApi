@@ -1,10 +1,9 @@
 package com.example.demo.controller;
 
-import com.example.demo.dto.AuthRequestDto;
 import com.example.demo.auth.JwtService;
+import com.example.demo.dto.AuthRequest;
 import com.example.demo.model.UserInfo;
 import com.example.demo.service.UserInfoService;
-//import com.example.demo.service.managementService.UserInfoManagementService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.authentication.AuthenticationManager;
@@ -18,13 +17,13 @@ import org.springframework.web.bind.annotation.*;
 public class UserController {
 
     @Autowired
-    private UserInfoService userInfoService;
+    private UserInfoService service;
+
     @Autowired
     private JwtService jwtService;
+
     @Autowired
     private AuthenticationManager authenticationManager;
-
-
 
     @GetMapping("/welcome")
     public String welcome() {
@@ -33,7 +32,7 @@ public class UserController {
 
     @PostMapping("/addNewUser")
     public String addNewUser(@RequestBody UserInfo userInfo) {
-        return userInfoService.addUser(userInfo);
+        return service.addUser(userInfo);
     }
 
     @GetMapping("/user/userProfile")
@@ -49,10 +48,10 @@ public class UserController {
     }
 
     @PostMapping("/generateToken")
-    public String authenticateAndGetToken(@RequestBody AuthRequestDto authRequest) {
-
+    public String authenticateAndGetToken(@RequestBody AuthRequest authRequest) {
+        System.out.println(authRequest.getUsername());
         Authentication authentication = authenticationManager.authenticate(new UsernamePasswordAuthenticationToken(authRequest.getUsername(), authRequest.getPassword()));
-
+        System.out.println(authRequest.getUsername());
         if (authentication.isAuthenticated()) {
             return jwtService.generateToken(authRequest.getUsername());
         } else {

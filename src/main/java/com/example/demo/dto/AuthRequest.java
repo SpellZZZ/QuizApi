@@ -3,7 +3,7 @@ package com.example.demo.dto;
 
 import java.io.Serializable;
 
-public class AuthRequestDto implements Serializable {
+public class AuthRequest implements Serializable {
 
     private static final long serialVersionUID = -8091879091924046844L;
 
@@ -15,10 +15,10 @@ public class AuthRequestDto implements Serializable {
 
 
 
-    public AuthRequestDto() {
+    public AuthRequest() {
     }
 
-    public AuthRequestDto(String username, String password) {
+    public AuthRequest(String username, String password) {
         this.username = username;
         this.password = password;
     }
