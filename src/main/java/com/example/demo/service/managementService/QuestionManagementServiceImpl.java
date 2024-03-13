@@ -12,7 +12,6 @@ import com.example.demo.service.dbService.TopicService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
 
@@ -40,7 +39,7 @@ public class QuestionManagementServiceImpl implements QuestionManagementService 
 
     @Override
     public List<Topic> getTopicsFromList(List<String> topicStringList) {
-        return topicService.findTopicsByNames(topicStringList);
+        return topicService.getTopicsByNames(topicStringList);
     }
 
     @Override

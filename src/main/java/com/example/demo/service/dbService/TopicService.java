@@ -7,5 +7,6 @@ import java.util.List;
 public interface TopicService {
     public List<Topic> getAllTopics();
     public void createTopic(Topic topic);
-    public List<Topic> findTopicsByNames(List<String> topicNames);
+    public List<Topic> getTopicsByNames(List<String> topicNames);
+    public Topic getTopicsByName(String topicName);
 }

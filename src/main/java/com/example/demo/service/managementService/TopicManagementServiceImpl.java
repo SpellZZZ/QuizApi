@@ -22,8 +22,9 @@ public class TopicManagementServiceImpl implements TopicManagementService {
 
 
     @Override
-    public void createTopic(String newTopic) {
+    public void createTopic(String newTopic) throws Exception {
         String topicName = newTopic.substring(1,newTopic.length()-1);
+        if(isUniqueTopic(newTopic)) throw new Exception("Taki temat istnieje");
         Topic topic = new Topic(topicName);
         topicService.createTopic(topic);
     }
@@ -38,5 +39,10 @@ public class TopicManagementServiceImpl implements TopicManagementService {
         return topics.stream()
                     .map(Topic::getTopicName)
                     .collect(Collectors.toList());
+    }
+
+
+    public boolean isUniqueTopic(String topicName){
+        return topicService.getTopicsByName(topicName) == null;
     }
 }

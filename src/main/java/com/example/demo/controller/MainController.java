@@ -60,7 +60,12 @@ public class MainController {
 
     @PostMapping(value = "/addTopic")
     public void addTopics(@RequestBody String newTopic){
-        topicManagementService.createTopic(newTopic);
+        try{
+            topicManagementService.createTopic(newTopic);
+        } catch(Exception ignored){
+
+        }
+
     }
 
 
