@@ -2,8 +2,7 @@ package com.example.demo.auth;
 
 
 
-import com.example.demo.auth.JwtAuthFilter;
-import com.example.demo.auth.UserInfoService;
+import com.example.demo.service.managementService.UserInfoManagementServiceImpl;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -33,10 +32,10 @@ public class SecurityConfig {
     @Autowired
     private JwtAuthFilter authFilter;
 
-    // User Creation
+
     @Bean
     public UserDetailsService userDetailsService() {
-        return new UserInfoService();
+        return new UserInfoManagementServiceImpl();
     }
 
     // Configuring HttpSecurity

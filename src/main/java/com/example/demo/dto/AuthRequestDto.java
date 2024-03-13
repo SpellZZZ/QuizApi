@@ -1,9 +1,9 @@
-package com.example.demo.auth;
+package com.example.demo.dto;
 
 
 import java.io.Serializable;
 
-public class AuthRequest implements Serializable {
+public class AuthRequestDto implements Serializable {
 
     private static final long serialVersionUID = -8091879091924046844L;
 
@@ -15,10 +15,10 @@ public class AuthRequest implements Serializable {
 
 
 
-    public AuthRequest() {
+    public AuthRequestDto() {
     }
 
-    public AuthRequest(String username, String password) {
+    public AuthRequestDto(String username, String password) {
         this.username = username;
         this.password = password;
     }
