@@ -24,7 +24,7 @@ public class MainController {
     final private TopicManagementService topicManagementService;
 
     @Autowired
-    MainController(QuestionManagementService questionManagementService,
+    public MainController(QuestionManagementService questionManagementService,
                    TopicManagementService topicManagementService
     ){
         this.questionManagementService = questionManagementService;
