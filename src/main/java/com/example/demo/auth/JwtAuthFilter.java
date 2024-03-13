@@ -1,5 +1,8 @@
 package com.example.demo.auth;
 
+
+import com.example.demo.auth.JwtService;
+import com.example.demo.auth.UserInfoService;
 import jakarta.servlet.FilterChain;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServletRequest;
@@ -14,6 +17,7 @@ import org.springframework.web.filter.OncePerRequestFilter;
 
 import java.io.IOException;
 
+// This class helps us to validate the generated jwt token
 @Component
 public class JwtAuthFilter extends OncePerRequestFilter {
 

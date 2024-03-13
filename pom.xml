@@ -87,6 +87,11 @@
 			<scope>runtime</scope>
 		</dependency>
 
+		<dependency>
+			<groupId>org.apache.tomcat</groupId>
+			<artifactId>tomcat-jasper</artifactId>
+			<version>10.1.4</version>
+		</dependency>
 
 		<!-- Hibernate Validator -->
 		<dependency>

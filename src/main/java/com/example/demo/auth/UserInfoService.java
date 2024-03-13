@@ -1,5 +1,10 @@
+
 package com.example.demo.auth;
 
+
+
+
+import com.example.demo.model.UserInfo;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;

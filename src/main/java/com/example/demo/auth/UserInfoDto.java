@@ -5,21 +5,22 @@ import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 
-@Entity
-public class UserInfo {
+import java.io.Serializable;
 
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private int id;
+
+public class UserInfoDto implements Serializable {
+
+    private static final long serialVersionUID = -8091879091924046844L;
+
     private String name;
     private String email;
     private String password;
     private String roles;
 
-    public UserInfo() {
+    public UserInfoDto() {
     }
 
-    public UserInfo(String name, String email, String password, String roles) {
+    public UserInfoDto(String name, String email, String password, String roles) {
         this.name = name;
         this.email = email;
         this.password = password;

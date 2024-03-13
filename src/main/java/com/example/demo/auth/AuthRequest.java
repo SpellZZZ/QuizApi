@@ -1,7 +1,11 @@
 package com.example.demo.auth;
 
 
-public class AuthRequest {
+import java.io.Serializable;
+
+public class AuthRequest implements Serializable {
+
+    private static final long serialVersionUID = -8091879091924046844L;
 
     private String username;
     private String password;
