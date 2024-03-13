@@ -1,10 +1,9 @@
-package com.example.demo.controller;
+package com.example.demo.auth;
 
 import com.example.demo.auth.JwtService;
 import com.example.demo.auth.UserInfoService;
-import com.example.demo.dto.AuthRequest;
-import com.example.demo.model.UserInfo;
-import com.example.demo.util.JwtUtil;
+import com.example.demo.auth.AuthRequest;
+import com.example.demo.auth.UserInfo;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.authentication.AuthenticationManager;
