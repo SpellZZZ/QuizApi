@@ -23,10 +23,10 @@ public class UserInfoDaoImpl  implements UserInfoDao{
 
 
     @Override
-    public UserInfo getUserByName(String username) {
+    public UserInfo getUserByName(String name) {
         try (Session session = sessionFactory.openSession()) {
-            return session.createQuery("FROM UserInfo WHERE username = :username", UserInfo.class)
-                    .setParameter("username", username)
+            return session.createQuery("FROM UserInfo WHERE name = :name", UserInfo.class)
+                    .setParameter("name", name)
                     .uniqueResult();
         }
     }
