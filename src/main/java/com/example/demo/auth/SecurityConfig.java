@@ -3,7 +3,7 @@ package com.example.demo.auth;
 
 
 
-import com.example.demo.service.UserInfoService;
+import com.example.demo.service.managementService.UserInfoManagementServiceImpl;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -33,13 +33,12 @@ public class SecurityConfig {
     @Autowired
     private JwtAuthFilter authFilter;
 
-    // User Creation
+
     @Bean
     public UserDetailsService userDetailsService() {
-        return new UserInfoService();
+        return new UserInfoManagementServiceImpl();
     }
 
-    // Configuring HttpSecurity
     @Bean
     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
         return http
@@ -60,7 +59,6 @@ public class SecurityConfig {
                 .build();
     }
 
-    // Password Encoding
     @Bean
     public PasswordEncoder passwordEncoder() {
         return new BCryptPasswordEncoder();

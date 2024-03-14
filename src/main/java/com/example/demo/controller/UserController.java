@@ -3,7 +3,7 @@ package com.example.demo.controller;
 import com.example.demo.auth.JwtService;
 import com.example.demo.dto.AuthRequest;
 import com.example.demo.model.UserInfo;
-import com.example.demo.service.UserInfoService;
+import com.example.demo.service.managementService.UserInfoManagementServiceImpl;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.authentication.AuthenticationManager;
@@ -17,7 +17,7 @@ import org.springframework.web.bind.annotation.*;
 public class UserController {
 
     @Autowired
-    private UserInfoService service;
+    private UserInfoManagementServiceImpl service;
 
     @Autowired
     private JwtService jwtService;
