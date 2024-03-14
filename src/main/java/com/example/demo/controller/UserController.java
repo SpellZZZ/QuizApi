@@ -4,7 +4,7 @@ import com.example.demo.dto.AuthRequestDto;
 import com.example.demo.auth.JwtService;
 import com.example.demo.model.UserInfo;
 import com.example.demo.service.UserInfoService;
-import com.example.demo.service.managementService.UserInfoManagementService;
+//import com.example.demo.service.managementService.UserInfoManagementService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.authentication.AuthenticationManager;
@@ -50,11 +50,8 @@ public class UserController {
 
     @PostMapping("/generateToken")
     public String authenticateAndGetToken(@RequestBody AuthRequestDto authRequest) {
-        System.out.println(authRequest.getUsername());
-        System.out.println(authRequest.getPassword());
+
         Authentication authentication = authenticationManager.authenticate(new UsernamePasswordAuthenticationToken(authRequest.getUsername(), authRequest.getPassword()));
-        System.out.println(authRequest.getUsername());
-        System.out.println(authRequest.getPassword());
 
         if (authentication.isAuthenticated()) {
             return jwtService.generateToken(authRequest.getUsername());

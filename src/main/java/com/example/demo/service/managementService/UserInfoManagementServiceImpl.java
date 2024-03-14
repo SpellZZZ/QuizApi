@@ -12,7 +12,7 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import java.util.Optional;
-
+/*
 @Service
 public class UserInfoManagementServiceImpl implements  UserInfoManagementService, UserDetailsService {
 
@@ -22,7 +22,7 @@ public class UserInfoManagementServiceImpl implements  UserInfoManagementService
     private UserService userInfoService;
 
 
-    /*
+
        final private PasswordEncoder encoder;
        final private UserInfoService userInfoService;
 
@@ -35,7 +35,7 @@ public class UserInfoManagementServiceImpl implements  UserInfoManagementService
        public UserInfoManagementServiceImpl(){
 
        }
-   */
+
     public String addUser(UserInfo userInfo) {
         userInfo.setPassword(encoder.encode(userInfo.getPassword()));
         userInfoService.addUser(userInfo);
@@ -53,3 +53,4 @@ public class UserInfoManagementServiceImpl implements  UserInfoManagementService
     }
 
 }
+*/
