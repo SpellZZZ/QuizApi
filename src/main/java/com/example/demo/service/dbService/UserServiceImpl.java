@@ -1,6 +1,5 @@
 package com.example.demo.service.dbService;
 
-import com.example.demo.dao.TopicDao;
 import com.example.demo.dao.UserInfoDao;
 import com.example.demo.model.UserInfo;
 import jakarta.transaction.Transactional;
@@ -9,13 +8,13 @@ import org.springframework.stereotype.Service;
 
 
 @Service
-public class UserInfoServiceImpl implements UserInfoService {
+public class UserServiceImpl implements UserService {
 
     final private UserInfoDao userInfoDao;
 
 
     @Autowired
-    UserInfoServiceImpl(UserInfoDao userInfoDao){
+    UserServiceImpl(UserInfoDao userInfoDao){
         this.userInfoDao = userInfoDao;
     }
 

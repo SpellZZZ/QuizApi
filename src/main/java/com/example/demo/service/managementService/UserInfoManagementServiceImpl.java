@@ -3,7 +3,7 @@ package com.example.demo.service.managementService;
 
 import com.example.demo.auth.UserInfoDetails;
 import com.example.demo.model.UserInfo;
-import com.example.demo.service.dbService.UserInfoService;
+import com.example.demo.service.dbService.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
@@ -19,7 +19,7 @@ public class UserInfoManagementServiceImpl implements  UserInfoManagementService
     @Autowired
     private PasswordEncoder encoder;
     @Autowired
-    private UserInfoService userInfoService;
+    private UserService userInfoService;
 
 
     /*

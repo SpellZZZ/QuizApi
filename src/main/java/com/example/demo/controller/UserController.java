@@ -3,6 +3,7 @@ package com.example.demo.controller;
 import com.example.demo.dto.AuthRequestDto;
 import com.example.demo.auth.JwtService;
 import com.example.demo.model.UserInfo;
+import com.example.demo.service.UserInfoService;
 import com.example.demo.service.managementService.UserInfoManagementService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.access.prepost.PreAuthorize;
@@ -17,7 +18,7 @@ import org.springframework.web.bind.annotation.*;
 public class UserController {
 
     @Autowired
-    private UserInfoManagementService userInfoManagementService;
+    private UserInfoService userInfoService;
     @Autowired
     private JwtService jwtService;
     @Autowired
@@ -32,7 +33,7 @@ public class UserController {
 
     @PostMapping("/addNewUser")
     public String addNewUser(@RequestBody UserInfo userInfo) {
-        return userInfoManagementService.addUser(userInfo);
+        return userInfoService.addUser(userInfo);
     }
 
     @GetMapping("/user/userProfile")
@@ -54,6 +55,7 @@ public class UserController {
         Authentication authentication = authenticationManager.authenticate(new UsernamePasswordAuthenticationToken(authRequest.getUsername(), authRequest.getPassword()));
         System.out.println(authRequest.getUsername());
         System.out.println(authRequest.getPassword());
+
         if (authentication.isAuthenticated()) {
             return jwtService.generateToken(authRequest.getUsername());
         } else {
