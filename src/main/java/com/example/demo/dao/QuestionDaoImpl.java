@@ -23,7 +23,7 @@ public class QuestionDaoImpl implements QuestionDao {
     final private SessionFactory sessionFactory;
 
     @Autowired
-    QuestionDaoImpl(SessionFactory sessionFactory){
+    public QuestionDaoImpl(SessionFactory sessionFactory){
         this.sessionFactory = sessionFactory;
     }
 
