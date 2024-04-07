@@ -1,16 +1,32 @@
 package com.example.demo;
 
+import com.example.demo.auth.JwtService;
 import com.example.demo.controller.MainController;
+import com.example.demo.dto.QuestionDto;
 import com.example.demo.dto.QuestionFormDto;
 import com.example.demo.dto.TopicDto;
+import com.example.demo.model.Question;
 import com.example.demo.model.Topic;
 import com.example.demo.service.managementService.QuestionManagementService;
 import com.example.demo.service.managementService.TopicManagementService;
+import com.example.demo.service.managementService.UserInfoManagementServiceImpl;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.extension.ExtendWith;
+import org.mockito.InjectMocks;
+import org.mockito.Mock;
+import org.mockito.junit.jupiter.MockitoExtension;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
 import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.http.MediaType;
+import org.springframework.security.access.prepost.PreAuthorize;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContext;
+import org.springframework.security.test.context.support.TestExecutionEvent;
+import org.springframework.security.test.context.support.WithMockUser;
+import org.springframework.security.test.context.support.WithUserDetails;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
 
@@ -19,17 +35,23 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
+
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.mockito.BDDMockito.given;
 import static org.mockito.Mockito.*;
+import static org.springframework.security.test.web.servlet.request.SecurityMockMvcRequestPostProcessors.csrf;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
 
 
+
+@ExtendWith(MockitoExtension.class)
 @WebMvcTest(MainController.class)
 public class MainControllerHTTPCodesTest {
 
-
+    @InjectMocks
+    private MainController mainController;
     @Autowired
     private MockMvc mockMvc;
 
@@ -39,34 +61,55 @@ public class MainControllerHTTPCodesTest {
     @MockBean
     private TopicManagementService topicManagementService;
 
+    @MockBean
+    private JwtService jwtService;
+
+    @MockBean
+    private UserInfoManagementServiceImpl userInfoManagementService;
+
+
+
     @Test
+    @WithMockUser
     void allQuestions() throws Exception {
-        when(questionManagementService.getQuestionsList()).thenReturn(null);
-        this.mockMvc.perform(get("/allQuestions"))
-                .andExpect(status().isOk());
+
+        mockMvc.perform(get("/allQuestions"))
+                .andExpect(status().isOk())
+                .andExpect(content().contentTypeCompatibleWith(MediaType.APPLICATION_JSON));
     }
 
     @Test
+    @WithMockUser
     void addQuestion() throws Exception {
-        QuestionFormDto questionFormDto = null;
-        this.mockMvc.perform(post("/addQuestion")
-                .contentType(MediaType.APPLICATION_JSON)
-                .content("{}"))
+        //QuestionFormDto questionFormDto = new QuestionFormDto("question", "answer", null);
+
+        mockMvc.perform(post("/addQuestion")
+                                .with(csrf())
+                                .contentType(MediaType.APPLICATION_JSON)
+                                .content("{\"question\":\"test\",\"answer\":\"test\",\"topics\":[\"Java\",\"jezyk\"]}")
+                        )
                 .andExpect(status().isOk());
+
     }
 
     @Test
+    @WithMockUser
     void singleQuestion() throws Exception {
-        TopicDto topicDto = null;
-        when(questionManagementService.singleQuestion(topicDto)).thenReturn(null);
+        QuestionDto questionDto = new QuestionDto("question", "answer");
 
-        this.mockMvc.perform(post("/singleQuestion")
+        //given(questionManagementService.singleQuestion(any(TopicDto.class))).willReturn(questionDto);
+        when(questionManagementService.singleQuestion(any(TopicDto.class))).thenReturn(questionDto);
+
+        mockMvc.perform(post("/singleQuestion")
                         .contentType(MediaType.APPLICATION_JSON)
-                        .content("{}"))
-                .andExpect(status().isOk());
+                        .with(csrf())
+                        .content("{\"topics\":[\"Java\",\"jezyk\"]}"))
+                .andExpect(status().isOk())
+                .andExpect(content().contentTypeCompatibleWith(MediaType.APPLICATION_JSON));
     }
 
     @Test
+    @WithMockUser
     void allTopics() throws Exception {
         List<Topic> topics = new ArrayList<>();
         topics.add(new Topic("Topic 1"));
@@ -84,11 +127,14 @@ public class MainControllerHTTPCodesTest {
     }
 
     @Test
+    @WithMockUser
     void addTopics() throws Exception {
         mockMvc.perform(MockMvcRequestBuilders.post("/addTopic")
                         .contentType(MediaType.APPLICATION_JSON)
+                        .with(csrf())
                         .content("Topic"))
                 .andExpect(status().isOk());
     }
+
 
 }
