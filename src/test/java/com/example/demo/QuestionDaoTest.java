@@ -61,15 +61,15 @@ public class QuestionDaoTest {
 
         questionDao.updateQuestion(q);
 
-    }
-    @Test
+    }*/
+    /*@Test
     public void listQuestions() {
         Query q = Mockito.mock(Query.class);
         List<Question> temp = new ArrayList<>(){{
             add(new Question(1, "1", "1", null));
             add(new Question(2, "2", "2", null));
         }};
-        when(session.get)
+        when(session.get())
         when(q.getResultList()).thenReturn(temp);
 
 
@@ -91,4 +91,4 @@ public class QuestionDaoTest {
 
 
 }
-*/
+        */
