@@ -22,74 +22,68 @@ import java.util.ArrayList;
 import java.util.List;
 
 import static org.mockito.Mockito.*;
-/*
-@ExtendWith(SpringExtension.class)
+
 public class QuestionDaoTest {
 
     @MockBean
     private SessionFactory sessionFactory;
 
-    @MockBean
+    @Mock
     private Session session;
 
-
-    private QuestionDao questionDao;
-
+    @InjectMocks
+    private QuestionDaoImpl questionDao;
 
     @BeforeEach
-    public void setup() throws Exception {
-        Mockito.when(sessionFactory.getCurrentSession()).thenReturn(session);
-        questionDao = new QuestionDaoImpl(sessionFactory);
+    public void setup() {
+        MockitoAnnotations.initMocks(this);
     }
 
-
     @Test
-    void addQuestion() {
-        Question q = new Question();
-        q.setQuestion("Pytanie 1");
-        q.setAnswer("Odpowiedz 1");
+    public void testAddQuestion() {
+        Question question = new Question();
+        doNothing().when(session).persist(question);
 
-        questionDao.addQuestion(q);
+        questionDao.addQuestion(question);
 
+        verify(session).persist(question);
     }
 
-
     @Test
-    public void updateQuestion(){
-        Question q = new Question();
-        q.setQuestion("Pytanie 1");
-        q.setAnswer("Odpowiedz 1");
+    public void testUpdateQuestion() {
+        Question question = new Question();
+        doNothing().when(session).update(question);
 
-        questionDao.updateQuestion(q);
+        questionDao.updateQuestion(question);
 
-    }*/
-    /*@Test
-    public void listQuestions() {
-        Query q = Mockito.mock(Query.class);
-        List<Question> temp = new ArrayList<>(){{
-            add(new Question(1, "1", "1", null));
-            add(new Question(2, "2", "2", null));
-        }};
-        when(session.get())
-        when(q.getResultList()).thenReturn(temp);
-
-
-        List<Question> questions = questionDao.listQuestions();
-        Assertions.assertEquals(questions.size(), temp.size());
+        verify(session).update(question);
     }
 
+    @Test
+    public void testListQuestions() {
+        List<Question> questions = new ArrayList<>();
+        questions.add(new Question());
+        questions.add(new Question());
+        when(session.createQuery("from Question").list()).thenReturn(questions);
+
+        List<Question> result = questionDao.listQuestions();
+
+        verify(session).createQuery("from Question");
+        // Add more assertions here to validate the result
+    }
 
     @Test
-    public void listQuestionsQA(){}
-    @Test
-    public void getQuestionById(){}
-    @Test
-    public void removeQuestion(int id){}
-    @Test
-    public void findQuestionsByTopicNames(){}
+    public void testListQuestionsQA() {
+        List<Object[]> questionAnswerList = new ArrayList<>();
+        questionAnswerList.add(new Object[]{"Question 1", "Answer 1"});
+        questionAnswerList.add(new Object[]{"Question 2", "Answer 2"});
+        when(session.createQuery("select q.question, q.answer from Question q").list()).thenReturn(questionAnswerList);
 
+        List<QuestionDto> result = questionDao.listQuestionsQA();
 
+        verify(session).createQuery("select q.question, q.answer from Question q");
+        // Add more assertions here to validate the result
+    }
 
-
+    // Add more test cases for other methods as needed
 }
-        */
