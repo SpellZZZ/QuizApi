@@ -82,7 +82,7 @@ public class QuestionDaoTest {
         List<QuestionDto> result = questionDao.listQuestionsQA();
 
         verify(session).createQuery("select q.question, q.answer from Question q");
-        // Add more assertions here to validate the result
+        // Add more assertions here to validate the results
     }
 
     // Add more test cases for other methods as needed
