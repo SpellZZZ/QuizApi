@@ -1,7 +1,6 @@
 package com.example.demo;
 
-import com.example.demo.dao.QuestionDao;
-import com.example.demo.dao.TopicDao;
+
 import com.example.demo.dto.QuestionDto;
 import com.example.demo.dto.QuestionFormDto;
 import com.example.demo.dto.TopicDto;
@@ -46,7 +45,6 @@ class QuestionManagementServiceImplTest {
 
     @Test
     void testGetQuestionsList() {
-        Question question = new Question();
         List<Question> expectedQuestions = new ArrayList<>();
         when(questionService.listQuestions()).thenReturn(expectedQuestions);
 
