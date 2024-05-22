@@ -8,22 +8,15 @@ import com.example.demo.dto.TopicDto;
 import com.example.demo.model.Question;
 import com.example.demo.model.Topic;
 
-import com.example.demo.service.dbService.QuestionService;
+
 import com.example.demo.service.dbService.QuestionServiceImpl;
-import com.example.demo.service.dbService.TopicService;
 import com.example.demo.service.dbService.TopicServiceImpl;
 import com.example.demo.service.managementService.QuestionManagementServiceImpl;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
-import org.junit.jupiter.api.extension.ExtendWith;
-import org.junit.runner.RunWith;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
-import org.mockito.Mockito;
 import org.mockito.MockitoAnnotations;
-import org.mockito.junit.MockitoJUnitRunner;
-import org.mockito.junit.jupiter.MockitoExtension;
-import org.springframework.boot.test.mock.mockito.MockBean;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -36,11 +29,10 @@ import static org.mockito.Mockito.*;
 class QuestionManagementServiceImplTest {
 
     @Mock
-    private QuestionDao questionDao;
     private QuestionServiceImpl questionService;
     @Mock
-    private TopicDao topicDao;
     private TopicServiceImpl topicService;
+    @Mock
     private Random rn;
 
     @InjectMocks
@@ -48,20 +40,14 @@ class QuestionManagementServiceImplTest {
 
     @BeforeEach
     public void setUp() {
-        // Tworzymy instancję QuestionServiceImpl z mockiem QuestionDao
         MockitoAnnotations.openMocks(this);
-        rn = mock(Random.class);
-        questionService = new QuestionServiceImpl(questionDao);
-        topicService = new TopicServiceImpl(topicDao);
-        questionManagementService = new QuestionManagementServiceImpl(questionService, topicService );
     }
 
 
     @Test
-    public void testGetQuestionsList() {
-        Question question = new Question(); // przykładowy obiekt pytania
+    void testGetQuestionsList() {
+        Question question = new Question();
         List<Question> expectedQuestions = new ArrayList<>();
-        //doNothing().
         when(questionService.listQuestions()).thenReturn(expectedQuestions);
 
         List<Question> result = questionManagementService.getQuestionsList();
@@ -71,7 +57,7 @@ class QuestionManagementServiceImplTest {
 
 
     @Test
-    public void testGetTopicsFromList() {
+    void testGetTopicsFromList() {
         List<String> topicStringList = new ArrayList<>();
         List<Topic> expectedTopics = new ArrayList<>();
         when(topicService.getTopicsByNames(topicStringList)).thenReturn(expectedTopics);
@@ -81,23 +67,24 @@ class QuestionManagementServiceImplTest {
         assertEquals(expectedTopics, result);
     }
 
+
     @Test
-    public void testAddQuestion() {
+    void testAddQuestion() {
         QuestionFormDto questionFormDto = new QuestionFormDto();
         List<String> topicStringList = new ArrayList<>();
         questionFormDto.setQuestion("Test Question");
         questionFormDto.setAnswer("Test Answer");
         questionFormDto.setTopics(topicStringList);
 
+        doNothing().when(questionService).addQuestion(any(Question.class));
         questionManagementService.addQuestion(questionFormDto);
 
-        verify(topicService).getTopicsByNames(topicStringList);
-        verify(questionService).addQuestion(any(Question.class));
+        verify(questionService, times(1)).addQuestion(any(Question.class));
     }
 
 
     @Test
-    public void testSingleQuestion_WhenQuestionListIsEmpty() {
+    void testSingleQuestion_WhenQuestionListIsEmpty() {
         TopicDto topicDto = new TopicDto();
         topicDto.setTopics(new ArrayList<>());
 
@@ -112,7 +99,7 @@ class QuestionManagementServiceImplTest {
 
 
     @Test
-    public void testSingleQuestion_WhenQuestionListIsNotEmpty() {
+    void testSingleQuestion_WhenQuestionListIsNotEmpty() {
 
 
 

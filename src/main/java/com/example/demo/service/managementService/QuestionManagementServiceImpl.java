@@ -18,17 +18,15 @@ import java.util.Random;
 @Service
 public class QuestionManagementServiceImpl implements QuestionManagementService {
 
-
-    Random rn = new Random();
-    final private QuestionService questionService;
-    final private TopicService topicService;
+    private final QuestionService questionService;
+    private final TopicService topicService;
+    private final Random rn;
 
     @Autowired
-    public QuestionManagementServiceImpl(QuestionServiceImpl questionService,
-                                         TopicService topicService
-    ){
+    public QuestionManagementServiceImpl(QuestionService questionService, TopicService topicService, Random rn) {
         this.questionService = questionService;
         this.topicService = topicService;
+        this.rn = rn;
     }
 
     @Override
