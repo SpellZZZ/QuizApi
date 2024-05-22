@@ -24,8 +24,8 @@ public class QuestionManagementServiceImpl implements QuestionManagementService 
     final private TopicService topicService;
 
     @Autowired
-    QuestionManagementServiceImpl(QuestionServiceImpl questionService,
-                                  TopicService topicService
+    public QuestionManagementServiceImpl(QuestionServiceImpl questionService,
+                                         TopicService topicService
     ){
         this.questionService = questionService;
         this.topicService = topicService;

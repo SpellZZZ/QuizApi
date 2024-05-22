@@ -14,7 +14,7 @@ public class TopicServiceImpl implements TopicService {
     final private TopicDao topicDao;
 
     @Autowired
-    TopicServiceImpl(TopicDao topicDao){
+    public TopicServiceImpl(TopicDao topicDao){
          this.topicDao = topicDao;
     }
 
