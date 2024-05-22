@@ -26,7 +26,11 @@ public class Question {
 
     public Question() {
     }
-
+    public Question(String question, String answer, List<Topic> topics) {
+        this.question = question;
+        this.answer = answer;
+        this.topics = topics;
+    }
     public Question(int question_id, String question, String answer, List<Topic> topics) {
         this.question_id = question_id;
         this.question = question;

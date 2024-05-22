@@ -95,15 +95,28 @@ class QuestionManagementServiceImplTest {
 
     @Test
     public void testSingleQuestion() {
+
+        List<Topic> topicList = new ArrayList<>() {
+            {
+                add(new Topic("test"));
+            }
+        };
+        List<String> topicListString = new ArrayList<>() {
+            {
+                add("test");
+            }
+        };
+
         TopicDto topicDto = new TopicDto();
-        List<String> topics = new ArrayList<>();
-        topics.add("Test Topic");
-        topicDto.setTopics(topics);
+        topicDto.setTopics(topicListString);
 
-        List<Question> questionList = new ArrayList<>();
-        questionList.add(new Question());
-        when(questionService.findQuestionsByTopicNames(topics)).thenReturn(questionList);
+        List<Question> questionList = new ArrayList<>(){
+            {
+                new Question("asd", "asd", topicList);
+            }
+        };
 
+        when(questionService.findQuestionsByTopicNames(topicListString)).thenReturn(questionList);
         QuestionDto result = questionManagementService.singleQuestion(topicDto);
 
         assertEquals("Question 1", result.getQuestion());
