@@ -27,6 +27,7 @@ import org.springframework.boot.test.mock.mockito.MockBean;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Random;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.mockito.Mockito.*;
@@ -40,7 +41,7 @@ class QuestionManagementServiceImplTest {
     @Mock
     private TopicDao topicDao;
     private TopicServiceImpl topicService;
-
+    private Random rn;
 
     @InjectMocks
     private QuestionManagementServiceImpl questionManagementService;
@@ -49,6 +50,7 @@ class QuestionManagementServiceImplTest {
     public void setUp() {
         // Tworzymy instancję QuestionServiceImpl z mockiem QuestionDao
         MockitoAnnotations.openMocks(this);
+        rn = mock(Random.class);
         questionService = new QuestionServiceImpl(questionDao);
         topicService = new TopicServiceImpl(topicDao);
         questionManagementService = new QuestionManagementServiceImpl(questionService, topicService );
@@ -93,33 +95,58 @@ class QuestionManagementServiceImplTest {
         verify(questionService).addQuestion(any(Question.class));
     }
 
+
     @Test
-    public void testSingleQuestion() {
+    public void testSingleQuestion_WhenQuestionListIsEmpty() {
+        TopicDto topicDto = new TopicDto();
+        topicDto.setTopics(new ArrayList<>());
+
+        when(questionService.findQuestionsByTopicNames(anyList())).thenReturn(new ArrayList<>());
+
+        QuestionDto result = questionManagementService.singleQuestion(topicDto);
+
+        assertEquals("Brak pytan", result.getQuestion());
+        assertEquals("Brak odpowiedzi", result.getAnswer());
+    }
+
+
+
+    @Test
+    public void testSingleQuestion_WhenQuestionListIsNotEmpty() {
+
+
+
+        TopicDto topicDto = new TopicDto();
+        List<String> topics = new ArrayList<>();
+        topics.add("topic1");
+        topicDto.setTopics(topics);
 
         List<Topic> topicList = new ArrayList<>() {
             {
                 add(new Topic("test"));
             }
         };
-        List<String> topicListString = new ArrayList<>() {
-            {
-                add("test");
-            }
-        };
-
-        TopicDto topicDto = new TopicDto();
-        topicDto.setTopics(topicListString);
-
         List<Question> questionList = new ArrayList<>(){
             {
-                new Question("asd", "asd", topicList);
-            }
-        };
+            add(new Question("Question1", "Answer1", topicList));
+            add(new Question("Question2", "Answer2", topicList));
 
-        when(questionService.findQuestionsByTopicNames(topicListString)).thenReturn(questionList);
+        }};
+
+
+        when(questionService.findQuestionsByTopicNames(anyList())).thenReturn(questionList);
+        when(rn.nextInt(anyInt())).thenReturn(0);
+
+
         QuestionDto result = questionManagementService.singleQuestion(topicDto);
 
-        assertEquals("Question 1", result.getQuestion());
-        assertEquals("Answer 1", result.getAnswer());
+
+        assertEquals("Question1", result.getQuestion());
+        assertEquals("Answer1", result.getAnswer());
+
     }
+
+
+
+
 }
