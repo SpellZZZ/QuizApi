@@ -3,9 +3,7 @@ package com.example.demo;
 import com.example.demo.auth.JwtService;
 import com.example.demo.controller.MainController;
 import com.example.demo.dto.QuestionDto;
-import com.example.demo.dto.QuestionFormDto;
 import com.example.demo.dto.TopicDto;
-import com.example.demo.model.Question;
 import com.example.demo.model.Topic;
 import com.example.demo.service.managementService.QuestionManagementService;
 import com.example.demo.service.managementService.TopicManagementService;
@@ -39,7 +37,7 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 
 @ExtendWith(MockitoExtension.class)
 @WebMvcTest(MainController.class)
-public class MainControllerHTTPCodesTest {
+class MainControllerHTTPCodesTest {
 
     @InjectMocks
     private MainController mainController;
