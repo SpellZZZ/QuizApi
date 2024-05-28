@@ -1,11 +1,8 @@
 package com.example.demo;
 
 
-import com.example.demo.model.Question;
 import com.example.demo.model.Topic;
-import com.example.demo.service.dbService.TopicService;
 import com.example.demo.service.dbService.TopicServiceImpl;
-import com.example.demo.service.managementService.TopicManagementService;
 import com.example.demo.service.managementService.TopicManagementServiceImpl;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -37,7 +34,7 @@ class TopicManagementServiceImplTest {
     }
 
     @Test
-    void createTopicDoesntExistTest() throws Exception {
+    void createTopicNotExistTest() throws Exception {
         String topicS = "sample";
         Topic topic = new Topic(topicS);
         //prepare
@@ -79,6 +76,33 @@ class TopicManagementServiceImplTest {
 
     @Test
     void getOnlyTopicsNamesTest() {
+        List<Topic> topics = new ArrayList<Topic>(){{
+            add(new Topic("topic 1"));
+            add(new Topic("topic 2"));
+            add(new Topic("topic 3"));
+            add(new Topic("topic 4"));
+        }};
+
+        List<String> topicsNames = topicManagementService.getOnlyTopicsNames(topics);
+
+        assertEquals("topic 1", topicsNames.get(0));
+        assertEquals("topic 2", topicsNames.get(1));
+        assertEquals("topic 3", topicsNames.get(2));
+        assertEquals("topic 4", topicsNames.get(3));
+
+        assertEquals(4, topicsNames.size());
+
+    }
+
+
+    @Test
+    void getOnlyTopicsNamesTestEmptyList() {
+        List<Topic> topics = new ArrayList<Topic>();
+
+        List<String> topicsNames = topicManagementService.getOnlyTopicsNames(topics);
+
+
+        assertEquals(0, topicsNames.size());
 
     }
 
