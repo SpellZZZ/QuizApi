@@ -1,4 +1,4 @@
-package com.example.demo;
+package com.example.demo.controller;
 
 import com.example.demo.controller.MainController;
 import com.example.demo.dto.QuestionDto;
