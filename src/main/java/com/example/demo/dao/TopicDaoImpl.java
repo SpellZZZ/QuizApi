@@ -45,8 +45,9 @@ public class TopicDaoImpl implements TopicDao{
         }
     }
     @Override
-    public Topic getTopicsByName(String topicName) {
+    public Topic getTopicByName(String topicName) {
         try (Session session = sessionFactory.openSession()) {
+
             return session.createQuery("FROM Topic WHERE topicName = :topicName", Topic.class)
                     .setParameter("topicName", topicName)
                     .uniqueResult();

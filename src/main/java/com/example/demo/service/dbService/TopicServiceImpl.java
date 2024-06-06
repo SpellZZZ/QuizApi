@@ -39,7 +39,7 @@ public class TopicServiceImpl implements TopicService {
     @Override
     @Transactional
     public Topic getTopicsByName(String topicName){
-        return topicDao.getTopicsByName(topicName);
+        return topicDao.getTopicByName(topicName);
     }
 
 

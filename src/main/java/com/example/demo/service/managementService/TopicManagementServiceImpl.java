@@ -13,7 +13,7 @@ import java.util.stream.Collectors;
 @Service
 public class TopicManagementServiceImpl implements TopicManagementService {
 
-    final private TopicService topicService;
+    private final TopicService topicService;
     @Autowired
     TopicManagementServiceImpl(TopicServiceImpl topicService
     ){
@@ -23,8 +23,10 @@ public class TopicManagementServiceImpl implements TopicManagementService {
 
     @Override
     public void createTopic(String newTopic) throws Exception {
-        String topicName = newTopic.substring(1,newTopic.length()-1);
+        String topicName = newTopic.substring(0,newTopic.length());
+
         if(isUniqueTopic(newTopic)) throw new Exception("Taki temat istnieje");
+
         Topic topic = new Topic(topicName);
         topicService.createTopic(topic);
     }
@@ -43,6 +45,6 @@ public class TopicManagementServiceImpl implements TopicManagementService {
 
 
     public boolean isUniqueTopic(String topicName){
-        return topicService.getTopicsByName(topicName) == null;
+        return topicService.getTopicsByName(topicName) != null;
     }
 }

@@ -20,13 +20,18 @@ public class QuestionManagementServiceImpl implements QuestionManagementService 
 
     private final QuestionService questionService;
     private final TopicService topicService;
-    private final Random rn;
+    //private final Random rn;
 
-    @Autowired
+    /*@Autowired
     public QuestionManagementServiceImpl(QuestionService questionService, TopicService topicService, Random rn) {
         this.questionService = questionService;
         this.topicService = topicService;
         this.rn = rn;
+    }*/
+    @Autowired
+    public QuestionManagementServiceImpl(QuestionService questionService, TopicService topicService) {
+        this.questionService = questionService;
+        this.topicService = topicService;
     }
 
     @Override
@@ -58,6 +63,8 @@ public class QuestionManagementServiceImpl implements QuestionManagementService 
 
         if(questionList.isEmpty()) return new QuestionDto("Brak pytan", "Brak odpowiedzi");
 
+
+        Random rn = new Random();
         int i = rn.nextInt((int) questionList.size());
 
         return new QuestionDto(questionList.get( i ).getQuestion(), questionList.get( i ).getAnswer());

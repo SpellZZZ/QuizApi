@@ -49,7 +49,7 @@ public class SecurityConfig {
                         .requestMatchers(new MvcRequestMatcher(handlerMappingIntrospector,"/auth/addNewUser")).permitAll()
                         .requestMatchers(new MvcRequestMatcher(handlerMappingIntrospector,"/auth/user/**")).authenticated()
                         .requestMatchers(new MvcRequestMatcher(handlerMappingIntrospector,"/auth/admin/**")).authenticated()
-                        .anyRequest().authenticated()
+                        .anyRequest().permitAll()
                 )
                 .sessionManagement(session -> session
                         .sessionCreationPolicy(SessionCreationPolicy.STATELESS)

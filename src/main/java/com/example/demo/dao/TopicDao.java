@@ -10,6 +10,6 @@ public interface TopicDao {
     public List<Topic> getAllTopics();
     public void createTopic(Topic topic);
     public List<Topic> getTopicsByNames(List<String> topicNames);
-    public Topic getTopicsByName(String topicName);
+    public Topic getTopicByName(String topicName);
 
 }
