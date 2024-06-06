@@ -23,7 +23,7 @@ public class TopicManagementServiceImpl implements TopicManagementService {
 
     @Override
     public void createTopic(String newTopic) throws Exception {
-        String topicName = newTopic.substring(0,newTopic.length());
+        String topicName = newTopic.substring(1,newTopic.length()-1);
 
         if(isUniqueTopic(newTopic)) throw new Exception("Taki temat istnieje");
 
