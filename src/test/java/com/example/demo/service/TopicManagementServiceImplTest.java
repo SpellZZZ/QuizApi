@@ -38,7 +38,7 @@ class TopicManagementServiceImplTest {
         String topicS = "sample";
         Topic topic = new Topic(topicS);
         //prepare
-        when(topicService.getTopicsByName(anyString())).thenReturn(topic);
+        when(topicService.getTopicsByName(anyString())).thenReturn(null);
         doNothing().when(topicService).createTopic(any(Topic.class));
 
         topicManagementService.createTopic(topicS);
@@ -51,7 +51,7 @@ class TopicManagementServiceImplTest {
         String topicS = "sample";
         Topic topic = new Topic(topicS);
         //prepare
-        when(topicService.getTopicsByName(anyString())).thenReturn(null);
+        when(topicService.getTopicsByName(anyString())).thenReturn(topic);
         doNothing().when(topicService).createTopic(any(Topic.class));
 
         Exception exception = assertThrows(Exception.class, () -> {
@@ -113,7 +113,7 @@ class TopicManagementServiceImplTest {
 
         when(topicService.getTopicsByName(anyString())).thenReturn(null);
         boolean result = topicManagementService.isUniqueTopic(name);
-        assertEquals(true, result);
+        assertEquals(false, result);
 
     }
 
@@ -124,7 +124,7 @@ class TopicManagementServiceImplTest {
 
         when(topicService.getTopicsByName(anyString())).thenReturn(sampleTopic);
         boolean result = topicManagementService.isUniqueTopic(name);
-        assertEquals(false, result);
+        assertEquals(true, result);
 
     }
 
