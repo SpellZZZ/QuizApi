@@ -19,8 +19,7 @@ import java.util.List;
 public class MainController {
 
 
-
-    final private QuestionManagementService questionManagementService;
+    private final QuestionManagementService questionManagementService;
     final private TopicManagementService topicManagementService;
 
     @Autowired
